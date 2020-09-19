@@ -4,4 +4,4 @@ All instructions commented in code
 
 ![](finalmaze.png)
 
-![](animation.mp4)
+![](animation.gif)
