@@ -27,21 +27,6 @@ save.image(imagem, f, 1)
 ```
 ![](finalmaze.png)
 
-```R
-# Generate Maze ----------------------------------------------------------------------------------------------
-board <- matrix(0, 50, 50) # 50x50 Board
-board_cells <- labyrinth(10, 10, board = board) # Rat starting position at (10,10)
-board_cells <- esticar(board_cells, 5)
-imagem <- board_cells %>% as.cimg()
-imagem %>% plot()
-
-# Saving the maze
-
-f <- tempfile(fileext = ".png", tmpdir = getwd())
-save.image(imagem, f, 1)
-
-```
-
 ### Animation :
 
 
