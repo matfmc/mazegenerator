@@ -1,6 +1,6 @@
 # Maze Generator
 
-A sophisticated maze generator built in R that creates mazes using a random walk algorithm. The generator includes visualization capabilities for both static mazes and animated maze generation processes.
+A  maze generator built in R that creates mazes using a random walk algorithm. The generator includes visualization capabilities for both static mazes and animated maze generation processes.
 
 ## Features
 
