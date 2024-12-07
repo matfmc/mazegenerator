@@ -27,6 +27,7 @@ maze_path <- mazefy(1,1,board , verbose = TRUE)
 plot_maze(maze_path, board)
 
 ```
+![Rplot01](https://github.com/user-attachments/assets/56d8cbe3-9e09-418e-ba10-23caff0e96c4)
 
 ## Create Animation
 ```R
@@ -34,3 +35,7 @@ plot_maze(maze_path, board)
 # Generate an animated visualization of the maze creation process
 create_maze_animation(maze_path, board, "maze_animation.gif")
 ```
+
+
+https://github.com/user-attachments/assets/375dd1d3-905c-432d-a5e3-383691f1ab4b
+
