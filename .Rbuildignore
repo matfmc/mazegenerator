@@ -1,0 +1,8 @@
+^\.github$
+^_pkgdown\.yml$
+^README\.md$
+^LICENSE\.md$
+^mazegenerator_.*\.tar\.gz$
+^mazegenerator\.Rcheck$
+^.*\.Rproj$
+^\.Rproj\.user$

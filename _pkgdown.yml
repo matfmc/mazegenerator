@@ -1,0 +1,37 @@
+url: https://matfmc.github.io/mazegenerator/
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+home:
+  title: Generate, visualize, and solve mazes in R
+  description: >
+    An educational implementation of randomized depth-first maze generation
+    and A-star pathfinding.
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    github:
+      icon: fab fa-github
+      href: https://github.com/matfmc/mazegenerator
+      aria-label: GitHub repository
+
+reference:
+  - title: Maze generation and display
+    contents:
+      - generate_maze
+      - plot_maze
+      - animate_maze
+  - title: Pathfinding
+    contents:
+      - solve_maze
+
+articles:
+  - title: Learn the algorithm
+    navbar: ~
+    contents:
+      - how-it-works

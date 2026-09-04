@@ -1,0 +1,21 @@
+Package: mazegenerator
+Title: Generate, Visualize, and Solve Random Mazes
+Version: 0.1.0
+Authors@R:
+    person("Matheus", email = "mat.fmc@gmail.com", role = c("aut", "cre"))
+Description: An educational implementation of the randomized depth-first search
+    algorithm with backtracking. Generate perfect rectangular mazes, visualize
+    their construction, export animated GIFs, and find paths with A-star search.
+License: MIT + file LICENSE
+URL: https://github.com/matfmc/mazegenerator,
+    https://matfmc.github.io/mazegenerator/
+BugReports: https://github.com/matfmc/mazegenerator/issues
+Encoding: UTF-8
+Depends: R (>= 4.1.0)
+Suggests:
+    knitr,
+    magick,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3

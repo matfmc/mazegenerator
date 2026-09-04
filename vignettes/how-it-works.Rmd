@@ -1,0 +1,73 @@
+---
+title: "How maze generation works"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How maze generation works}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.align = "center")
+```
+
+## The idea
+
+`mazegenerator` uses randomized depth-first search with backtracking, often
+called the *recursive backtracker*. Despite the name, this implementation is
+iterative: a list is used as a stack, so it does not depend on R's recursion
+limit.
+
+Start by creating a small reproducible maze:
+
+```{r create}
+library(mazegenerator)
+
+maze <- generate_maze(8, 12, start = c(1, 1), seed = 42)
+maze
+```
+
+At each step, the generator:
+
+1. finds the orthogonal neighbors of the current cell;
+2. randomly chooses one that has not been visited;
+3. carves a passage and pushes that cell onto the stack;
+4. returns to the previous cell when it reaches a dead end.
+
+The process ends after every cell has been visited.
+
+```{r plot, fig.width=7, fig.height=5}
+plot_maze(maze)
+```
+
+## Why the result is a perfect maze
+
+Every new passage connects the visited region to exactly one previously
+unvisited cell. Therefore the passages never create a cycle. Because generation
+continues until every cell is visited, the result is also connected. A connected
+graph without cycles is a tree, so there is exactly one simple route between
+any pair of cells.
+
+For a maze with *rows × columns* cells, the generator creates exactly one fewer
+unique passage than the number of cells.
+
+```{r properties}
+length(maze$passages)
+maze$rows * maze$cols - 1
+```
+
+## Finding a route
+
+`solve_maze()` applies A-star search to the passage graph. Manhattan distance
+is an admissible heuristic because maze movement is orthogonal and each step
+has the same cost.
+
+```{r solve, fig.width=7, fig.height=5}
+solution <- solve_maze(maze)
+head(solution)
+plot_maze(maze, solution = solution)
+```
+
+The same function accepts a matrix in which selected values represent walkable
+cells. When diagonal movement is enabled, Euclidean distance and diagonal step
+costs are used so the search still returns a shortest path.

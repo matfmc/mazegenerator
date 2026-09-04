@@ -1,0 +1,6 @@
+S3method(plot,maze)
+S3method(print,maze)
+export(animate_maze)
+export(generate_maze)
+export(plot_maze)
+export(solve_maze)
