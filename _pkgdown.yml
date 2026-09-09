@@ -7,8 +7,12 @@ template:
 home:
   title: Generate, visualize, and solve mazes in R
   description: >
-    An educational implementation of randomized depth-first maze generation
-    and A-star pathfinding.
+    An educational implementation of eleven maze generation algorithms (DFS,
+    Prim, Kruskal, Wilson, Eller, recursive division, Aldous-Broder,
+    hunt-and-kill, binary tree, sidewinder, growing tree) and seven
+    pathfinding algorithms (A-star, Dijkstra, breadth-first search, greedy
+    best-first search, bidirectional search, wall following, dead-end
+    filling).
 
 navbar:
   structure:
@@ -29,9 +33,18 @@ reference:
       - generate_maze
       - plot_maze
       - animate_maze
+  - title: Post-processing
+    contents:
+      - braid
+      - sparsify
+      - set_endpoints
   - title: Pathfinding
     contents:
       - solve_maze
+      - animate_solution
+  - title: Analysis
+    contents:
+      - maze_stats
 
 articles:
   - title: Learn the algorithm

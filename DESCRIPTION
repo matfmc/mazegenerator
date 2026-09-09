@@ -3,9 +3,20 @@ Title: Generate, Visualize, and Solve Random Mazes
 Version: 0.1.0
 Authors@R:
     person("Matheus", email = "mat.fmc@gmail.com", role = c("aut", "cre"))
-Description: An educational implementation of the randomized depth-first search
-    algorithm with backtracking. Generate perfect rectangular mazes, visualize
-    their construction, export animated GIFs, and find paths with A-star search.
+Description: An educational implementation of eleven classic maze generation
+    algorithms -- randomized depth-first search, Prim, Kruskal, Wilson,
+    Eller, recursive division, Aldous-Broder, hunt-and-kill, binary tree,
+    sidewinder, and growing tree -- and nine pathfinding algorithms --
+    A-star, Dijkstra, breadth-first search, greedy best-first search,
+    bidirectional breadth-first search, bidirectional Dijkstra,
+    bidirectional A* (NBA*), wall following, and dead-end filling, with a
+    choice of A* heuristics (manhattan, euclidean, chebyshev, octile, or a
+    custom function). Generate perfect or braided rectangular mazes, including
+    shaped mazes carved through a mask, toroidal mazes that wrap at the
+    edges, and mazes with open rooms; braid or sparsify a maze after the
+    fact, and choose new start/end cells; compute comparative statistics
+    on a maze's structure; visualize construction and solutions, export
+    animated GIFs, and compare how the algorithms explore.
 License: MIT + file LICENSE
 URL: https://github.com/matfmc/mazegenerator,
     https://matfmc.github.io/mazegenerator/
