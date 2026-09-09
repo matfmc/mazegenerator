@@ -6,13 +6,19 @@
 #' @param maze A `maze` object returned by [generate_maze()].
 #' @param solution Optional two-column matrix or data frame returned by
 #'   [solve_maze()].
-#' @param show_path Draw the complete generation traversal.
-#' @param show_nodes Number the cells in the generation traversal.
+#' @param show_path Draw the complete generation traversal. Only available
+#'   for mazes generated with `algorithm = "dfs"`.
+#' @param show_nodes Number the cells in the generation traversal. Only
+#'   available for mazes generated with `algorithm = "dfs"`.
 #' @param wall_color,background_color Colors used for walls and cells.
 #' @param wall_width Width of wall lines.
 #' @param path_color,solution_color Colors used for optional path overlays.
 #' @param path_width Width of path overlays.
+#' @param cell_fill Optional data frame with `row`, `column` and `color`
+#'   columns. The named cells are shaded before the walls are drawn, which is how
+#'   [animate_solution()] paints the explored cells and the frontier.
 #' @param mark_endpoints Mark and label the start and end cells.
+#' @param main Plot title. Defaults to the maze dimensions.
 #' @param ... Additional graphical parameters passed by `plot.maze()`.
 #'
 #' @return The maze, invisibly.
@@ -25,9 +31,16 @@ plot_maze <- function(maze, solution = NULL, show_path = FALSE,
                       show_nodes = FALSE, wall_color = "#171717",
                       background_color = "white", wall_width = 3,
                       path_color = "#8b5cf6", solution_color = "#f59e0b",
-                      path_width = 2, mark_endpoints = TRUE) {
+                      path_width = 2, cell_fill = NULL, mark_endpoints = TRUE,
+                      main = NULL) {
   if (!.is_maze(maze)) {
     stop("`maze` must be an object returned by `generate_maze()`.", call. = FALSE)
+  }
+  if (isTRUE(show_path) && is.null(maze$traversal)) {
+    stop("`show_path` is only available for mazes generated with `algorithm = \"dfs\"`.", call. = FALSE)
+  }
+  if (isTRUE(show_nodes) && is.null(maze$visitation_order)) {
+    stop("`show_nodes` is only available for mazes generated with `algorithm = \"dfs\"`.", call. = FALSE)
   }
 
   old_par <- graphics::par(no.readonly = TRUE)
@@ -46,6 +59,8 @@ plot_maze <- function(maze, solution = NULL, show_path = FALSE,
     col = background_color,
     border = NA
   )
+
+  .draw_cell_fill(cell_fill)
 
   if (maze$cols > 1L) {
     for (column in seq_len(maze$cols - 1L)) {
@@ -106,8 +121,27 @@ plot_maze <- function(maze, solution = NULL, show_path = FALSE,
     graphics::text(maze$end[2L], maze$end[1L], "end", pos = 1, cex = 0.7, col = "#991b1b")
   }
 
-  graphics::title(main = sprintf("%d x %d maze", maze$rows, maze$cols))
+  if (is.null(main)) {
+    main <- sprintf("%d x %d maze", maze$rows, maze$cols)
+  }
+  graphics::title(main = main)
   invisible(maze)
+}
+
+.draw_cell_fill <- function(cell_fill) {
+  if (is.null(cell_fill) || nrow(cell_fill) == 0L) {
+    return(invisible(NULL))
+  }
+  if (!all(c("row", "column", "color") %in% names(cell_fill))) {
+    stop("`cell_fill` must have `row`, `column` and `color` columns.", call. = FALSE)
+  }
+  graphics::rect(
+    cell_fill$column - 0.5, cell_fill$row - 0.5,
+    cell_fill$column + 0.5, cell_fill$row + 0.5,
+    col = cell_fill$color,
+    border = NA
+  )
+  invisible(NULL)
 }
 
 #' @export

@@ -6,3 +6,5 @@
 ^mazegenerator\.Rcheck$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.positai$
+^\.claude$

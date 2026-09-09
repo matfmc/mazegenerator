@@ -40,3 +40,10 @@ test_that("matrix pathfinding reports invalid or impossible routes", {
   expect_error(solve_maze(blocked, c(1, 2), c(2, 2)), "walkable")
   expect_error(solve_maze(blocked), "required")
 })
+
+test_that("the default algorithm is astar", {
+  maze <- generate_maze(8, 8, seed = 99)
+  default_solution <- solve_maze(maze)
+  explicit_solution <- solve_maze(maze, algorithm = "astar")
+  expect_equal(default_solution, explicit_solution)
+})

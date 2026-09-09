@@ -7,8 +7,10 @@
 <!-- badges: end -->
 
 **mazegenerator** is a small educational R package for generating, visualizing,
-animating, and solving rectangular mazes. Maze generation uses randomized
-depth-first search with backtracking; pathfinding uses A-star search.
+animating, and solving rectangular mazes. It implements five generation
+algorithms — randomized depth-first search, Prim, Kruskal, Wilson, and Eller —
+and three pathfinding algorithms — A-star, Dijkstra, and breadth-first search —
+so their behaviour can be compared side by side.
 
 ![Animated generation of a maze](man/figures/animation.gif)
 
@@ -40,7 +42,17 @@ plot_maze(maze)
 ![A generated maze](man/figures/maze.png)
 
 Generation is reproducible when `seed` is supplied. The returned `maze` object
-contains the traversal history and the passages carved between cells.
+contains the passages carved between cells and `carve_order`, the order in
+which they were opened. Pick a different algorithm with `algorithm`:
+
+```r
+plot_maze(generate_maze(20, 20, seed = 99, algorithm = "prim"))
+```
+
+Each algorithm leaves a recognisable texture: depth-first search produces long
+winding corridors, Prim and Kruskal produce short bushy dead ends, Wilson draws
+uniformly from every possible maze, and Eller works one row at a time in
+constant memory.
 
 ## Solve it
 
@@ -50,6 +62,19 @@ plot_maze(maze, solution = path)
 ```
 
 ![A solved maze](man/figures/solved-maze.png)
+
+All three search algorithms return a shortest route; what differs is how much
+of the maze they expand to find it. `trace = TRUE` records every expansion:
+
+```r
+maze <- generate_maze(40, 40, seed = 123, algorithm = "kruskal")
+
+vapply(c("astar", "dijkstra", "bfs"), function(algo) {
+  length(attr(solve_maze(maze, algorithm = algo, trace = TRUE), "search_trace")$steps)
+}, integer(1))
+#>    astar dijkstra      bfs
+#>     1303     1600     1600
+```
 
 `solve_maze()` can also find a path through a numeric or logical matrix:
 
