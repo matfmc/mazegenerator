@@ -5,3 +5,16 @@
 docs/
 *.Rcheck/
 *.tar.gz
+.positai
+
+# Generated render artifacts -- reproducible via scripts/generate_mazes2.R
+mazes/
+mazes2/
+collages/
+*.gif
+*.png
+*.rds
+!man/figures/
+!man/figures/**
+scripts/__pycache__/
+tests/testthat/Rplots.pdf
