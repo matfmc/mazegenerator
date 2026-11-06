@@ -12,7 +12,18 @@ algorithms — randomized depth-first search, Prim, Kruskal, Wilson, and Eller �
 and three pathfinding algorithms — A-star, Dijkstra, and breadth-first search —
 so their behaviour can be compared side by side.
 
+📖 **Documentation and gallery:** <https://matfmc.github.io/mazegenerator/>
+
 ![Animated generation of a maze](man/figures/animation.gif)
+
+## Gallery
+
+Every generation algorithm carving the same 25 x 25 grid (`seed = 42`):
+
+![All generation algorithms side by side](man/figures/collage.gif)
+
+See each one up close, solved with A-star, in the
+[gallery](https://matfmc.github.io/mazegenerator/articles/gallery.html).
 
 ## Installation
 

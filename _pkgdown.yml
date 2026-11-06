@@ -16,9 +16,12 @@ home:
 
 navbar:
   structure:
-    left: [intro, reference, articles, news]
+    left: [intro, gallery, reference, articles, news]
     right: [search, github]
   components:
+    gallery:
+      text: Gallery
+      href: articles/gallery.html
     github:
       icon: fab fa-github
       href: https://github.com/matfmc/mazegenerator
@@ -51,3 +54,7 @@ articles:
     navbar: ~
     contents:
       - how-it-works
+  - title: See it in action
+    navbar: ~
+    contents:
+      - articles/gallery

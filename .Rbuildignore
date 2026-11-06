@@ -8,3 +8,9 @@
 ^\.Rproj\.user$
 ^\.positai$
 ^\.claude$
+^vignettes/articles$
+^man/figures/gallery$
+^man/figures/collage\.gif$
+^mazes2?$
+^collages$
+^logs$

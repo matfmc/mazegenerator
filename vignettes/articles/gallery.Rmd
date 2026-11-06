@@ -1,0 +1,100 @@
+---
+title: "Gallery"
+description: >
+  Every generation algorithm in mazegenerator, animated: how each one carves
+  a 25 x 25 maze and how A-star solves it.
+---
+
+```{r, include = FALSE}
+mazes <- data.frame(
+  dir = c(
+    "dfs", "prim", "kruskal", "wilson", "eller", "division",
+    "aldous_broder", "hunt_kill", "binary_tree", "sidewinder",
+    "growing_tree_newest", "growing_tree_random",
+    "growing_tree_oldest", "growing_tree_mixed"
+  ),
+  label = c(
+    "Depth-first search", "Prim", "Kruskal", "Wilson", "Eller",
+    "Recursive division", "Aldous-Broder", "Hunt-and-kill",
+    "Binary tree", "Sidewinder",
+    "Growing tree (newest)", "Growing tree (random)",
+    "Growing tree (oldest)", "Growing tree (mixed)"
+  ),
+  call = c(
+    'algorithm = "dfs"', 'algorithm = "prim"', 'algorithm = "kruskal"',
+    'algorithm = "wilson"', 'algorithm = "eller"', 'algorithm = "division"',
+    'algorithm = "aldous_broder"', 'algorithm = "hunt_kill"',
+    'algorithm = "binary_tree"', 'algorithm = "sidewinder"',
+    'algorithm = "growing_tree", selection = "newest"',
+    'algorithm = "growing_tree", selection = "random"',
+    'algorithm = "growing_tree", selection = "oldest"',
+    'algorithm = "growing_tree", selection = "mixed"'
+  )
+)
+fig <- function(dir, file) sprintf("../reference/figures/gallery/%s/%s", dir, file)
+card <- function(i) {
+  m <- mazes[i, ]
+  sprintf(
+    '<figure class="maze-card">
+  <figcaption><strong>%s</strong><br><code>%s</code></figcaption>
+  <div class="maze-pair">
+    <div><img src="%s" alt="%s: generation" loading="lazy"><span>Generation</span></div>
+    <div><img src="%s" alt="%s: solved with A-star" loading="lazy"><span>A* solve</span></div>
+  </div>
+</figure>',
+    m$label, m$call,
+    fig(m$dir, "generation.gif"), m$label,
+    fig(m$dir, "solve_astar.gif"), m$label
+  )
+}
+```
+
+```{=html}
+<style>
+.maze-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+.maze-card { margin: 0; padding: 0.75rem; border: 1px solid var(--bs-border-color, #dee2e6); border-radius: 0.5rem; }
+.maze-card figcaption { margin-bottom: 0.5rem; line-height: 1.4; }
+.maze-card code { font-size: 0.75rem; }
+.maze-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.maze-pair img { width: 100%; height: auto; display: block; background: #fff; border-radius: 0.25rem; }
+.maze-pair span { display: block; text-align: center; font-size: 0.8rem; color: var(--bs-secondary-color, #6c757d); margin-top: 0.25rem; }
+.collage img { width: 100%; height: auto; }
+</style>
+```
+
+All mazes below are 25 x 25, generated with `seed = 42` and with start and
+end pinned to opposite corners (`set_endpoints(strategy = "corners")`). Each
+card shows the generation algorithm carving the maze and then A-star finding
+the shortest path.
+
+## All algorithms at once
+
+<div class="collage">
+<img src="../reference/figures/collage.gif" alt="Animated collage of every generation algorithm" loading="lazy">
+</div>
+
+## One algorithm at a time
+
+```{r, echo = FALSE, results = "asis"}
+cat('<div class="maze-grid">\n')
+cat(vapply(seq_len(nrow(mazes)), card, character(1)), sep = "\n")
+cat('\n</div>\n')
+```
+
+## Reproduce it
+
+The images come from `scripts/generate_mazes2.R` in the
+[GitHub repository](https://github.com/matfmc/mazegenerator). A single maze
+and its animations take a few lines:
+
+```r
+library(mazegenerator)
+
+maze <- generate_maze(25, 25, algorithm = "wilson", seed = 42)
+maze <- set_endpoints(maze, strategy = "corners")
+
+animate_maze(maze, output_file = "generation.gif")
+
+path <- solve_maze(maze, algorithm = "astar", trace = TRUE)
+animate_solution(maze, solution = path, output_file = "solve.gif")
+```
