@@ -35,13 +35,15 @@ fig <- function(dir, file) sprintf("../reference/figures/gallery/%s/%s", dir, fi
 card <- function(i) {
   m <- mazes[i, ]
   sprintf(
-    '<figure class="maze-card">
-  <figcaption><strong>%s</strong><br><code>%s</code></figcaption>
-  <div class="maze-pair">
-    <div><img src="%s" alt="%s: generation" loading="lazy"><span>Generation</span></div>
-    <div><img src="%s" alt="%s: solved with A-star" loading="lazy"><span>A* solve</span></div>
-  </div>
-</figure>',
+    # Tudo numa linha: HTML recuado vira bloco de código no Markdown.
+    paste0(
+      '<figure class="maze-card">',
+      '<figcaption><strong>%s</strong><br><code>%s</code></figcaption>',
+      '<div class="maze-pair">',
+      '<div><img src="%s" alt="%s: generation" loading="lazy"><span>Generation</span></div>',
+      '<div><img src="%s" alt="%s: solved with A-star" loading="lazy"><span>A* solve</span></div>',
+      '</div></figure>'
+    ),
     m$label, m$call,
     fig(m$dir, "generation.gif"), m$label,
     fig(m$dir, "solve_astar.gif"), m$label
